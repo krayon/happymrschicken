@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://root.gd" type="Script" id=1]
 [ext_resource path="res://tiles.tres" type="TileSet" id=2]
 [ext_resource path="res://chicken.tscn" type="PackedScene" id=3]
+[ext_resource path="res://egg.tscn" type="PackedScene" id=4]
 
 [node name="root" type="Node2D" index="0"]
 
@@ -32,5 +33,10 @@ tile_data = PoolIntArray( 0, 0, 0, 8, 0, 0, 16, 0, 0, 24, 0, 0, 524288, 0, 0, 52
 
 position = Vector2( 264, 254 )
 scale = Vector2( 0.25, 0.25 )
+
+[node name="egg" parent="." index="2" instance=ExtResource( 4 )]
+
+scale = Vector2( 0.25, 0.25 )
+_sections_unfolded = [ "Transform" ]
 
 
