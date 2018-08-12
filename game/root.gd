@@ -15,15 +15,13 @@ func _input(ev): #{
 	#}
 	
 	if (ev.is_pressed() and ev.is_action("ui_accept")): #{
-		
-		
-		
-		print("SPRITE: ", $chicken.get_transform(), $chicken/Area2D/CollisionShape2D.shape.get_extents().x)
-		
 		if (!$chicken.laying): #{
-			$chicken.lay()
+			$chicken.lay();
 		#}
 		return;
+		
+	elif (ev.is_pressed()): #} {
+		move_to_loc_rand($chicken);
 	#}
 #}
 
@@ -47,13 +45,24 @@ func move_to_loc_rand(node): #{
 	var win_x = int(get_viewport().size.x);
 	var win_y = int(get_viewport().size.y);
 	
+	print("win x/y: ", win_x, ", ", win_y);
+	
 	var sprite_extends = null; # Vector2
 
-	if (node and node.get_transform()): #{
-		print(node.get_node("Area2D/CollisionShape2D"))
-		sprite_extends = node.get_node("Area2D/CollisionShape2D").shape.get_extents();
-
-	node.set_position(Vector2((randi() % win_x), (randi() % win_y)))
+	if (node and node.get_scale()): #{
+		print("scale: ", node.get_scale());
+		sprite_extends = node.get_node("Area2D/CollisionShape2D").shape.get_extents() * node.get_scale();
+		print("spr.ext: ", sprite_extends[0], ", ", sprite_extends[1]);
+		
+		win_x -= int(sprite_extends[0] * 2.0);
+		win_y -= int(sprite_extends[1] * 2.0);
+		
+		print("win x/y: ", win_x, ", ", win_y);
+		
+	node.set_position(Vector2(
+		int((sprite_extends[0] * 0.5) + (randi() % win_x))
+		,int((sprite_extends[1] * 0.5) + (randi() % win_y))
+	));
 
 #	var safe_x = win_x - s
 #

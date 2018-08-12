@@ -9,7 +9,9 @@ const FRAME_MOLO = 3;
 const FRAME_OFF_LO = 2; # Number to add to frame for legs open
 const FRAME_COUNT  = 2; # Number of frames total (not counting legs open)
 
-const TIME_LAY  = 1.0;
+const TIME_ANIM = 0.6;
+const TIME_MOVE = 1.0;
+const TIME_LAY  = 0.6;
 
 var _lastmove   = 0.0;
 var _lastanim   = 0.0;
@@ -18,6 +20,7 @@ var _donelaying = 0.0;
 var laying = false;
 
 func _ready(): #{
+	self.z_index = 1;
 	$AnimatedSprite.set_frame(FRAME_MCLC);
 #}
 
@@ -27,32 +30,35 @@ func _process(delta): #{
 	
 	if (_donelaying > 0.0): #{
 		_donelaying -= delta;
-		$AnimatedSprite.set_position(Vector2(0, -(TIME_LAY - _donelaying) * ($Area2D/CollisionShape2D.shape.get_extents()[1])));
+		$AnimatedSprite.set_position(Vector2(0, -(TIME_LAY - _donelaying) * ($Area2D/CollisionShape2D.shape.get_extents()[1] *2)));
 		if (_donelaying <= 0.0): #{
 			# We'll do this on next move instead
 			#self.z_index = 0;
 			#$AnimatedSprite.set_position(Vector2(0, 0));
 			laying = false;
+			_lastmove = TIME_MOVE;
+			_animate_frame_rand();
 		#}
 	#}
 	
-	if (_lastanim < 0.6): #{
+	if (_lastanim < TIME_ANIM): #{
 		_lastanim += delta;
 		
 	else: #} {
 		# Animate
-		_lastanim -= 0.6;
+		_lastanim -= TIME_ANIM;
 		_animate_frame_rand();
 	#}
 	
 	if (!laying): #{
-		if (_lastmove < 1.0): #{
+		if (_lastmove < TIME_MOVE): #{
 			_lastmove += delta;
 			
 		else: #} {
 			# Move
-			_lastmove -= 1.0;
-			self.z_index = 0;
+			_lastmove -= TIME_MOVE;
+			# Now always 1
+			#self.z_index = 0;
 			$AnimatedSprite.set_position(Vector2(0, 0));
 			_move_location_rand();
 		#}
@@ -73,7 +79,9 @@ func lay(): #{
 	if (laying): return;
 	
 	laying = true;
-	self.z_index = 1;
+	# Now always 1
+	#self.z_index = 1;
+	_animate_frame_rand();
 	_donelaying = TIME_LAY;
 	$AnimatedSprite.set_position(Vector2(0, -(TIME_LAY - _donelaying) * ($Area2D/CollisionShape2D.shape.get_extents()[1])));
 
