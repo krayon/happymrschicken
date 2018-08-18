@@ -12,6 +12,7 @@ config_version=3
 
 config/name="Happy Mrs Chicken"
 run/main_scene="res://root.tscn"
+boot_splash/image="res://splash.png"
 config/icon="res://icon.png"
 
 [display]
