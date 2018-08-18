@@ -84,7 +84,7 @@ func play_lay_sound_at_loc(loc): #{
 		#}
 	#}
 	
-	sstreams[s].position = loc;
-	sstreams[s].stream = s_lay_file[randi() % s_lay_file.size()];
-	sstreams[s].play();
+	sstreams[target_s].position = loc;
+	sstreams[target_s].stream = s_lay_file[randi() % s_lay_file.size()];
+	sstreams[target_s].play();
 #}
