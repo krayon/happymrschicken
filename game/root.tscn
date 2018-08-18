@@ -40,4 +40,52 @@ visible = false
 scale = Vector2( 0.25, 0.25 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
+[node name="Stream1" type="AudioStreamPlayer2D" parent="." index="3"]
+
+stream = null
+volume_db = 1.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+_sections_unfolded = [ "Transform" ]
+
+[node name="Stream2" type="AudioStreamPlayer2D" parent="." index="4"]
+
+stream = null
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+_sections_unfolded = [ "Transform" ]
+
+[node name="Stream3" type="AudioStreamPlayer2D" parent="." index="5"]
+
+stream = null
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+_sections_unfolded = [ "Transform" ]
+
+[node name="Stream4" type="AudioStreamPlayer2D" parent="." index="6"]
+
+stream = null
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+_sections_unfolded = [ "Transform" ]
+
 

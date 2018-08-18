@@ -2,8 +2,25 @@
 
 extends Node2D
 
+# Array of sound resources
+var s_lay_file = [
+	  preload("res://lay.01.wav")
+	, preload("res://lay.02.wav")
+	, preload("res://lay.03.wav")
+	, preload("res://lay.04.wav")
+	];
+
+# Array of AudioStreamPlayer/AudioStreamPlayer2D
+var sstreams = [];
+
 func _ready(): #{
 	randomize();
+	
+	# Fill sound object array with or audio players
+	sstreams.append($Stream1);
+	sstreams.append($Stream2);
+	sstreams.append($Stream3);
+	sstreams.append($Stream4);
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 #}
@@ -54,4 +71,20 @@ func move_to_loc_rand(node): #{
 		 int((sprite_extends[0] * 0.5) + (randi() % win_x))
 		,int((sprite_extends[1] * 0.5) + (randi() % win_y))
 	));
+#}
+
+func play_lay_sound_at_loc(loc): #{
+	var target_s = 0;
+	
+	# Find a non-playing stream
+	for s in range(sstreams.size()): #{
+		if (!sstreams[s].playing): #{
+			target_s = s;
+			break;
+		#}
+	#}
+	
+	sstreams[s].position = loc;
+	sstreams[s].stream = s_lay_file[randi() % s_lay_file.size()];
+	sstreams[s].play();
 #}

@@ -22,6 +22,9 @@ func lay(owner, pos): #{
 	if (dead == false): return false;
 	dead = false;
 	
+	# Egg is lay(ed/ing), find an audio stream
+	get_tree().get_root().get_node("root").play_lay_sound_at_loc(pos);
+	
 	self.mummy = owner;
 	self.visible = true;
 	self.position = pos;
