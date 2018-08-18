@@ -3,9 +3,8 @@
 [ext_resource path="res://egg.gd" type="Script" id=1]
 [ext_resource path="res://egg.png" type="Texture" id=2]
 
-[node name="egg" type="Node2D"]
+[node name="egg" type="Node2D" index="0"]
 
-editor/display_folded = true
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="." index="0"]

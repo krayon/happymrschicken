@@ -21,7 +21,7 @@ func _process(delta): #{
 func lay(owner, pos): #{
 	if (dead == false): return false;
 	dead = false;
-
+	
 	self.mummy = owner;
 	self.visible = true;
 	self.position = pos;
