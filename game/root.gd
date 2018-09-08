@@ -50,22 +50,25 @@ func move_to_loc_rand(node): #{
 	# Get the viewport (think screen) complete size
 	var win_x = int(get_viewport().size.x);
 	var win_y = int(get_viewport().size.y);
-	print("win x/y: ", win_x, ", ", win_y);
+	if (OS.is_debug_build()): print("win x/y: ", win_x, ", ", win_y);
 	
 	# No node, nothing to do
 	if (!node): return
 	
 	# The scale
 	var scale = Vector2(1, 1);
-	if (!(scale == node.get_scale())): scale = Vector2(1, 1);
-	print("scale: ", node.get_scale());
-	var sprite_extends = node.get_node("Area2D/CollisionShape2D").shape.get_extents() * scale;
-	print("spr.ext: ", sprite_extends[0], ", ", sprite_extends[1]);
+	var extents = Vector2(1, 1);
+	if (node.get_scale()): scale = node.get_scale();
+	if (OS.is_debug_build()): print("scale:   ", scale);
+	extents = node.get_node("Area2D/CollisionShape2D").shape.get_extents();
+	if (OS.is_debug_build()): print("extents: ", extents);
+	var sprite_extends = (extents * 2.0) * scale;
+	if (OS.is_debug_build()): print("spr.ext: ", sprite_extends[0], ", ", sprite_extends[1]);
 	
 	# Win X/Y -= Chicken Size
-	win_x -= int(sprite_extends[0] * 2.0);
-	win_y -= int(sprite_extends[1] * 2.0);
-	print("win x/y: ", win_x, ", ", win_y);
+	win_x -= int(sprite_extends[0]);
+	win_y -= int(sprite_extends[1]);
+	if (OS.is_debug_build()): print("win x/y: ", win_x, ", ", win_y);
 	
 	node.set_position(Vector2(
 		 int((sprite_extends[0] * 0.5) + (randi() % win_x))
