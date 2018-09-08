@@ -68,6 +68,9 @@ func _process(delta): #{
 func _animate_frame_rand(): #{
 	var from = $AnimatedSprite.frame;
 	var to   = (randi() % FRAME_COUNT);
+	if (to % 2 == 1): #{
+		if (!$squark.playing): $squark.play();
+	#}
 	if (laying): to += FRAME_OFF_LO;
 	$AnimatedSprite.set_frame(to);
 	var now  = $AnimatedSprite.frame;
