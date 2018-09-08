@@ -23,6 +23,8 @@ func _ready(): #{
 	sstreams.append($Stream4);
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
+	
+	$musictime/music.play();
 #}
 
 func _input(ev): #{
@@ -90,4 +92,8 @@ func play_lay_sound_at_loc(loc): #{
 	sstreams[target_s].position = loc;
 	sstreams[target_s].stream = s_lay_file[randi() % s_lay_file.size()];
 	sstreams[target_s].play();
+#}
+
+func _on_musictime_timeout(): #{
+	if (!$musictime/music.playing): $musictime/music.play();
 #}
