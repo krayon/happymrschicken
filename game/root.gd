@@ -1,6 +1,9 @@
 # vim:ts=4:tw=80:sw=4:ai:si
 
-extends Node2D
+extends Node2D;
+
+# Score, set using _score_set function
+export (int) onready var score = 0 setget _score_set;
 
 # Array of sound resources
 var s_lay_file = [
@@ -24,7 +27,8 @@ func _ready(): #{
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 	
-	$musictime/music.play();
+	# Set score to zero. This also triggers music to play
+	self.score = 0;
 #}
 
 func _input(ev): #{
@@ -46,6 +50,12 @@ func _input(ev): #{
 
 func _exit_tree(): #{
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+#}
+
+func _score_set(score_new): #{
+	score = score_new;
+	print("score: ", score);
+	if (score % 10 == 0): _play_music();
 #}
 
 func move_to_loc_rand(node): #{
@@ -92,6 +102,14 @@ func play_lay_sound_at_loc(loc): #{
 	sstreams[target_s].position = loc;
 	sstreams[target_s].stream = s_lay_file[randi() % s_lay_file.size()];
 	sstreams[target_s].play();
+#}
+
+func _play_music(): #{
+	# Function is called prior to scene setup?
+	if (!$musictime): return;
+	$musictime.stop();
+	$musictime/music.play();
+	$musictime.start();
 #}
 
 func _on_musictime_timeout(): #{

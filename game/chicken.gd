@@ -87,7 +87,7 @@ func lay(): #{
 	_animate_frame_rand();
 	_donelaying = TIME_LAY;
 	$AnimatedSprite.set_position(Vector2(0, -(TIME_LAY - _donelaying) * ($Area2D/CollisionShape2D.shape.get_extents()[1])));
-
+	
 	#	print(node.get_node("Area2D/CollisionShape2D"))
 	#	sprite_extends = node.get_node("Area2D/CollisionShape2D").shape.get_extents();
 	
@@ -96,6 +96,7 @@ func lay(): #{
 	if (egg.lay(self, self.global_position)): #{
 		# Layed
 		print("LAYED");
+		get_tree().get_root().get_node("root").score += 1;
 	#}
 #}
 

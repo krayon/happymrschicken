@@ -28,4 +28,6 @@ func lay(owner, pos): #{
 	self.mummy = owner;
 	self.visible = true;
 	self.position = pos;
+	
+	return true;
 #}

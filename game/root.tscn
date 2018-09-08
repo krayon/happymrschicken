@@ -9,6 +9,7 @@
 [node name="root" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
+score = 0
 
 [node name="TileMap" type="TileMap" parent="." index="0"]
 
