@@ -35,16 +35,36 @@ func _input(ev): #{
 	if (ev.is_pressed() and ev.is_action("ui_cancel")): #{
 		get_tree().quit();
 		return;
-	#}
-	
-	if (ev.is_pressed() and ev.is_action("ui_accept")): #{
+		
+	elif (ev.is_pressed() and ev.is_action("ui_accept")): #} {
 		if (!$chicken.laying): #{
 			$chicken.lay();
 		#}
 		return;
 		
-	elif (ev.is_pressed()): #} {
+	elif (ev is InputEventKey         && ev.is_pressed()): #} {
 		move_to_loc_rand($chicken);
+		return;
+		
+	elif (ev is InputEventScreenTouch && ev.is_pressed()): #} {
+		var chick_size = $chicken.get_scale() * $chicken.get_node("Area2D/CollisionShape2D").shape.get_extents();
+		var chick_min = $chicken.position - chick_size;
+		var chick_max = $chicken.position + chick_size;
+		
+		if (OS.is_debug_build()): print("Touching: ", ev.position);
+		
+		if (
+			   chick_min.x < ev.position.x
+			&& chick_min.y < ev.position.y
+			&& chick_max.x > ev.position.x
+			&& chick_max.y > ev.position.y
+		): #{
+			if (OS.is_debug_build()): print("Chicken: (", $chicken.position - chick_size, ", ", $chicken.position + chick_size, ")");
+			$chicken.lay();
+			return;
+		#}
+		
+		$chicken.move_to_loc(ev.position);
 	#}
 #}
 
@@ -70,7 +90,7 @@ func move_to_loc_rand(node): #{
 	if (OS.is_debug_build()): print("win x/y: ", win_x, ", ", win_y);
 	
 	# No node, nothing to do
-	if (!node): return
+	if (!node): return;
 	
 	# The scale
 	var scale = Vector2(1, 1);

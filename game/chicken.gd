@@ -2,10 +2,10 @@
 
 extends Node2D
 
-const FRAME_MCLC = 0;
-const FRAME_MOLC = 1;
-const FRAME_MCLO = 2;
-const FRAME_MOLO = 3;
+const FRAME_MCLC   = 0;
+const FRAME_MOLC   = 1;
+const FRAME_MCLO   = 2;
+const FRAME_MOLO   = 3;
 const FRAME_OFF_LO = 2; # Number to add to frame for legs open
 const FRAME_COUNT  = 2; # Number of frames total (not counting legs open)
 
@@ -56,11 +56,12 @@ func _process(delta): #{
 			
 		else: #} {
 			# Move
-			_lastmove -= TIME_MOVE;
+			
 			# Now always 1
 			#self.z_index = 0;
+			
 			$AnimatedSprite.set_position(Vector2(0, 0));
-			_move_location_rand();
+			_move_to_loc_rand();
 		#}
 	#}
 #}
@@ -100,6 +101,12 @@ func lay(): #{
 	#}
 #}
 
-func _move_location_rand(): #{
+func move_to_loc(location): #{
+	_lastmove -= TIME_MOVE;
+	self.set_position(location);
+#}
+
+func _move_to_loc_rand(): #{
+	_lastmove -= TIME_MOVE;
 	self.get_parent().move_to_loc_rand(self);
 #}
