@@ -76,7 +76,7 @@ func _animate_frame_rand(): #{
 	$AnimatedSprite.set_frame(to);
 	var now  = $AnimatedSprite.frame;
 	
-	print("ANIMATE: ", from, " --> ", to, " --> ", now);
+	if (OS.is_debug_build()): print("ANIMATE: ", from, " --> ", to, " --> ", now);
 #}
 
 func lay(): #{
@@ -89,14 +89,14 @@ func lay(): #{
 	_donelaying = TIME_LAY;
 	$AnimatedSprite.set_position(Vector2(0, -(TIME_LAY - _donelaying) * ($Area2D/CollisionShape2D.shape.get_extents()[1])));
 	
-	#	print(node.get_node("Area2D/CollisionShape2D"))
+	#	if (OS.is_debug_build()): print(node.get_node("Area2D/CollisionShape2D"))
 	#	sprite_extends = node.get_node("Area2D/CollisionShape2D").shape.get_extents();
 	
 	var egg = get_tree().get_root().get_node("root/egg").duplicate()
 	get_tree().get_root().add_child(egg)
 	if (egg.lay(self, self.global_position)): #{
 		# Layed
-		print("LAYED");
+		if (OS.is_debug_build()): print("LAYED");
 		get_tree().get_root().get_node("root").score += 1;
 	#}
 #}

@@ -97,7 +97,7 @@ func _input(ev): #{
 	elif (ev is InputEventScreenTouch && !ev.is_pressed()): #} {
 		var heldfor = OS.get_ticks_msec();
 		if (!touches.empty()): heldfor -= touches[ev.index];
-		print("Released (", ev.index, "): ", ev.position, ", secs: ", heldfor / 1000.0);
+		if (OS.is_debug_build()): print("Released (", ev.index, "): ", ev.position, ", secs: ", heldfor / 1000.0);
 		
 		if (!touches.empty()      && touches[ev.index]     ): touches.remove(ev.index);
 		if (!quit_touches.empty() && quit_touches[ev.index]): quit_touches.remove(ev.index);
@@ -123,7 +123,7 @@ func _exit_tree(): #{
 
 func _score_set(score_new): #{
 	score = score_new;
-	print("score: ", score);
+	if (OS.is_debug_build()): print("score: ", score);
 	if (score % 10 == 0): _play_music();
 	
 	# Function is called prior to scene setup?
