@@ -56,6 +56,11 @@ func _score_set(score_new): #{
 	score = score_new;
 	print("score: ", score);
 	if (score % 10 == 0): _play_music();
+	
+	# Function is called prior to scene setup?
+	if (!is_inside_tree() || !has_node("HUD/hor/scorebg/score")): return;
+	
+	$HUD/hor/scorebg/score.text = str(score);
 #}
 
 func move_to_loc_rand(node): #{
@@ -106,7 +111,7 @@ func play_lay_sound_at_loc(loc): #{
 
 func _play_music(): #{
 	# Function is called prior to scene setup?
-	if (!$musictime): return;
+	if (!is_inside_tree() || !has_node("musictime")): return;
 	$musictime.stop();
 	$musictime/music.play();
 	$musictime.start();
