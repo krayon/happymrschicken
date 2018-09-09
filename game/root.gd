@@ -16,6 +16,9 @@ var s_lay_file = [
 # Array of AudioStreamPlayer/AudioStreamPlayer2D
 var sstreams = [];
 
+# Touch events
+var touches = Array();
+
 func _ready(): #{
 	randomize();
 	
@@ -45,13 +48,20 @@ func _input(ev): #{
 	elif (ev is InputEventKey         && ev.is_pressed()): #} {
 		move_to_loc_rand($chicken);
 		return;
-		
-	elif (ev is InputEventScreenTouch && ev.is_pressed()): #} {
+	#}
+	
+	var middle_size = (get_viewport().size / 10.0);
+	var middle_min  = (get_viewport().size /  2.0) - middle_size;
+	var middle_max  = (get_viewport().size /  2.0) + middle_size;
+	
+	if (ev is InputEventScreenTouch && ev.is_pressed()): #} {
 		var chick_size = $chicken.get_scale() * $chicken.get_node("Area2D/CollisionShape2D").shape.get_extents();
 		var chick_min = $chicken.position - chick_size;
 		var chick_max = $chicken.position + chick_size;
 		
-		if (OS.is_debug_build()): print("Touching: ", ev.position);
+		if (OS.is_debug_build()): print("Touching (", ev.index, "): ", ev.position);
+		
+		touches.insert(ev.index, OS.get_unix_time());
 		
 		if (
 			   chick_min.x < ev.position.x
@@ -65,6 +75,19 @@ func _input(ev): #{
 		#}
 		
 		$chicken.move_to_loc(ev.position);
+	elif (ev is InputEventScreenTouch && !ev.is_pressed()): #} {
+		print("Released (", ev.index, "): ", ev.position, ", secs: ", OS.get_unix_time() - touches[ev.index]);
+		
+		if (OS.is_debug_build()): print("Middle: ", get_viewport().size / 2.0, ", Middle Point: ", middle_min, " - ", middle_max);
+		
+		if (
+			   middle_min.x < ev.position.x
+			&& middle_min.y < ev.position.y
+			&& middle_max.x > ev.position.x
+			&& middle_max.y > ev.position.y
+		): #{
+			get_tree().quit();
+		#}
 	#}
 #}
 
