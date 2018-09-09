@@ -5,6 +5,8 @@ extends Node2D;
 # Score, set using _score_set function
 export (int) onready var score = 0 setget _score_set;
 
+var _quit_delay = 3000.0;
+
 # Array of sound resources
 var s_lay_file = [
 	  preload("res://lay.01.wav")
@@ -18,6 +20,7 @@ var sstreams = [];
 
 # Touch events
 var touches = Array();
+var quit_touches = Array();
 
 func _ready(): #{
 	randomize();
@@ -32,6 +35,14 @@ func _ready(): #{
 	
 	# Set score to zero. This also triggers music to play
 	self.score = 0;
+#}
+
+func _process(delta): #{
+	if (!quit_touches.empty()): #{
+		$fade.color.a = clamp(float(OS.get_ticks_msec() - quit_touches.front()) / _quit_delay, 0.0, 1.0);
+	else: #{
+		$fade.color.a = 0.0;
+	#}
 #}
 
 func _input(ev): #{
@@ -61,7 +72,15 @@ func _input(ev): #{
 		
 		if (OS.is_debug_build()): print("Touching (", ev.index, "): ", ev.position);
 		
-		touches.insert(ev.index, OS.get_unix_time());
+		touches.insert(ev.index, OS.get_ticks_msec());
+		if (
+			   middle_min.x < ev.position.x
+			&& middle_min.y < ev.position.y
+			&& middle_max.x > ev.position.x
+			&& middle_max.y > ev.position.y
+		): #{
+			quit_touches.insert(ev.index, OS.get_ticks_msec());
+		#}
 		
 		if (
 			   chick_min.x < ev.position.x
@@ -76,7 +95,14 @@ func _input(ev): #{
 		
 		$chicken.move_to_loc(ev.position);
 	elif (ev is InputEventScreenTouch && !ev.is_pressed()): #} {
-		print("Released (", ev.index, "): ", ev.position, ", secs: ", OS.get_unix_time() - touches[ev.index]);
+		var heldfor = OS.get_ticks_msec();
+		if (!touches.empty()): heldfor -= touches[ev.index];
+		print("Released (", ev.index, "): ", ev.position, ", secs: ", heldfor / 1000.0);
+		
+		if (!touches.empty()      && touches[ev.index]     ): touches.remove(ev.index);
+		if (!quit_touches.empty() && quit_touches[ev.index]): quit_touches.remove(ev.index);
+		
+		if (heldfor < _quit_delay): return;
 		
 		if (OS.is_debug_build()): print("Middle: ", get_viewport().size / 2.0, ", Middle Point: ", middle_min, " - ", middle_max);
 		
