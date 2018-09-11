@@ -95,12 +95,18 @@ func _input(ev): #{
 		
 		$chicken.move_to_loc(ev.position);
 	elif (ev is InputEventScreenTouch && !ev.is_pressed()): #} {
-		var heldfor = OS.get_ticks_msec();
-		if (!touches.empty()): heldfor -= touches[ev.index];
+		var heldfor = 0;
+		if (!touches.empty() && touches[ev.index]): #{
+			heldfor = OS.get_ticks_msec() - touches[ev.index];
+			touches.remove(ev.index);
+		#}
 		if (OS.is_debug_build()): print("Released (", ev.index, "): ", ev.position, ", secs: ", heldfor / 1000.0);
 		
-		if (!touches.empty()      && touches[ev.index]     ): touches.remove(ev.index);
-		if (!quit_touches.empty() && quit_touches[ev.index]): quit_touches.remove(ev.index);
+		heldfor = 0;
+		if (!quit_touches.empty() && quit_touches[ev.index]): #{
+			heldfor = OS.get_ticks_msec() - quit_touches[ev.index];
+			quit_touches.remove(ev.index);
+		#}
 		
 		if (heldfor < _quit_delay): return;
 		
