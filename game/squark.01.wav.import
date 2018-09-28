@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/squark.01.wav-32eff6cea1b8e5b4e5074c19107a2306.sample"
+
+[deps]
+
+source_file="res://squark.01.wav"
+dest_files=[ "res://.import/squark.01.wav-32eff6cea1b8e5b4e5074c19107a2306.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
