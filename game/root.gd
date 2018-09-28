@@ -8,7 +8,7 @@ export (int) onready var score = 0 setget _score_set;
 var _quit_delay = 3000.0;
 
 # Array of sound resources
-var s_lay_file = [
+onready var s_lay_file = [
 	  preload("res://lay.01.wav")
 	, preload("res://lay.02.wav")
 	, preload("res://lay.03.wav")
@@ -24,6 +24,10 @@ var quit_touches = Array();
 
 func _ready(): #{
 	randomize();
+	
+	for i in s_lay_file: #{
+		i.loop = false;
+	#}
 	
 	# Fill sound object array with or audio players
 	sstreams.append($Stream1);
