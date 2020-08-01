@@ -26,7 +26,7 @@ func _ready(): #{
     randomize();
 
     for i in s_lay_file: #{
-        i.loop = false;
+        i.loop_mode = i.LOOP_DISABLED;
     #}
 
     # Fill sound object array with or audio players
