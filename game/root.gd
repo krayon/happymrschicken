@@ -35,7 +35,7 @@ func _ready(): #{
     sstreams.append($Stream3);
     sstreams.append($Stream4);
 
-    Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
+    #Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 
     # Set score to zero. This also triggers music to play
     self.score = 0;
@@ -97,7 +97,7 @@ func _input(ev): #{
             return;
         #}
 
-        $chicken.move_to_loc(ev.position);
+        if (OS.is_debug_build()): $chicken.move_to_loc(ev.position);
     elif (ev is InputEventScreenTouch && !ev.is_pressed()): #} {
         var heldfor = 0;
         if (!touches.empty() && touches[ev.index]): #{
@@ -110,6 +110,17 @@ func _input(ev): #{
         if (!quit_touches.empty() && quit_touches[ev.index]): #{
             heldfor = OS.get_ticks_msec() - quit_touches[ev.index];
             quit_touches.remove(ev.index);
+        #}
+
+        if (heldfor > (_quit_delay / 3) and heldfor < _quit_delay): #{
+            # Toggle cursor
+            Input.set_mouse_mode(
+                Input.MOUSE_MODE_VISIBLE
+                if (Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN)
+                else Input.MOUSE_MODE_HIDDEN
+            );
+        #}
+            #Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
         #}
 
         if (heldfor < _quit_delay): return;
