@@ -6,6 +6,13 @@ Peppa Pig and her family.
 
 
 -----
+# Licence #
+
+Code released under [GPL v2](LICENCE) .
+
+
+
+-----
 # Features #
 
   * Game with no ending
