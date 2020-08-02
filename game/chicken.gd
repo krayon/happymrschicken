@@ -1,6 +1,6 @@
 # vim:ts=4:et:tw=80:sw=4:ai:si
 
-extends Node2D
+extends Node2D;
 
 const FRAME_MCLC   = 0;
 const FRAME_MOLC   = 1;
@@ -89,11 +89,11 @@ func lay(): #{
     _donelaying = TIME_LAY;
     $AnimatedSprite.set_position(Vector2(0, -(TIME_LAY - _donelaying) * ($Area2D/CollisionShape2D.shape.get_extents()[1])));
 
-    #    if (OS.is_debug_build()): print(node.get_node("Area2D/CollisionShape2D"))
+    #    if (OS.is_debug_build()): print(node.get_node("Area2D/CollisionShape2D"));
     #    sprite_extends = node.get_node("Area2D/CollisionShape2D").shape.get_extents();
 
-    var egg = get_tree().get_root().get_node("root/egg").duplicate()
-    get_tree().get_root().add_child(egg)
+    var egg = get_tree().get_root().get_node("root/egg").duplicate();
+    get_tree().get_root().add_child(egg);
     if (egg.lay(self, self.global_position)): #{
         # Layed
         if (OS.is_debug_build()): print("LAYED");

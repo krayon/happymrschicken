@@ -1,6 +1,6 @@
 # vim:ts=4:et:tw=80:sw=4:ai:si
 
-extends Node2D
+extends Node2D;
 
 var mummy = null;
 var dead  = true;
@@ -8,7 +8,7 @@ var dead  = true;
 func _ready(): #{
     # Called when the node is added to the scene for the first time.
     # Initialization here
-    pass
+    pass;
 #}
 
 func _process(delta): #{
