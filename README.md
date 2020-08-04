@@ -17,6 +17,8 @@ Code released under [GPL v2](LICENCE) .
 -----
 # Features #
 
+  * Music by yours truly (believe it or not, no orchestra, not even instruments)
+  * Sound effects by my son
   * Game with no ending
   * Supports touchscreen, mouse and keyboard (though less exciting)
   * Chicken moves around the screen
