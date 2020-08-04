@@ -26,6 +26,20 @@ Code released under [GPL v2](LICENCE) .
 
 
 -----
+# Download #
+
+At present, the v1.0.3 release is available as a `pck` (Godot package), as well
+as platform specific bundles containing Godot v3.2.1 and the `pck` for Windows
+(32/64 bit), Linux (32/64 bit) and MacOS (64 bit).
+
+For Linux 64bit, a standalone, all in one, binary is also available (other
+platforms coming soon including the Android as well as the above).
+
+See the releases for links.
+
+
+
+-----
 # Future Features #
 
   * Actual functionality beyond the basics
